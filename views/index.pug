@@ -2,14 +2,15 @@ extends layout
 
 block content
     nav(class="navbar navbar-dark bg-primary")
-        a(class="navbar-brand" href="#")
+        a.navbar-brand(href="#")
             img(src="images/MIKE.png" style="width:75px; height:30px" class="d-inline-block align-top" alt="")
             span(style="margin-left: 20px;") Ego network of twitter data
-        form(class="form-inline")
+        form.form-inline
             input(class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search")
             button(class="btn btn-outline-light my-2 my-sm-0" type="submit") Search
-        div(class="wrapper" style="height: calc(100vh - 56.4px); background-color: salmon;")
-            svg#egonetwork
+    .wrapper(style="height: calc(100vh - 56.4px); background-color: salmon;" )
+        svg#egonetwork
+
     script(src='/javascripts/bootstrap.min.js')
     script(src='/javascripts/popper.min.js')
     script(src='/javascripts/jquery-3.3.1.slim.min.js')
