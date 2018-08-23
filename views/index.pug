@@ -5,14 +5,7 @@ block content
         a.navbar-brand(href="#")
             img(src="images/MIKE.png" style="width:75px; height:30px" class="d-inline-block align-top" alt="")
             span(style="margin-left: 20px;") Ego network of twitter data
-        form.form-inline
-            input(class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search")
-            button(class="btn btn-outline-light my-2 my-sm-0" type="submit") Search
-    .wrapper(style="height: calc(100vh - 56.4px); background-color: salmon;" )
-        svg#egonetwork
-
+    .container(style="background-color: salmon;" )
+        a.index_head(href="/egonetwork") Ego network
     script(src='/javascripts/bootstrap.min.js')
     script(src='/javascripts/popper.min.js')
-    script(src='/javascripts/jquery-3.3.1.slim.min.js')
-    script(src='/javascripts/d3.v5.min.js')
-    script(src='/javascripts/egonetwork.js')

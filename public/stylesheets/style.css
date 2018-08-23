@@ -6,3 +6,7 @@ body {
   box-sizing: content-box;
 }
 
+.index_head {
+  padding: 20px;
+  color: white;
+}
