@@ -1,6 +1,6 @@
 var user_id = "MagellanU"
 
-path_url = "https://gist.githubusercontent.com/booktay/34ad59741d1dc124612faf2b29c9c2e3/raw/8dca60ce186a24a06ef4695987b02a6084b60731/twitter_data.json"
+path_url = "data/raw_data.json"
 d3.json(path_url).then(function (data) {
 
     var category = [];
