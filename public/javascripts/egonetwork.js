@@ -1,53 +1,8 @@
-var user_id = "MagellanU"
+var user_id = "juthamas_rat"
 
-path_url = "data/raw_data.json"
-d3.json(path_url).then(function (data) {
+d3.json("/egonetwork/data").then(function (data) {
 
-    var category = [];
-    for (var row_data in data) {
-        if (data[row_data]['_id'] === user_id) {
-            category = data[row_data]['category'];
-        }
-    }
-
-    var friend = {};
-    for (var row_category in category) {
-        friend[category[row_category]] = []
-        for (var row_data in data) {
-            if (data[row_data]['_id'] !== user_id && data[row_data]['category'].includes(category[row_category])) {
-                friend[category[row_category]].push(data[row_data]['_id']);
-            }
-        }
-    }
-
-    var nodes = [],
-        links = [];
-
-    nodes.push({
-        id: user_id,
-        group: 0
-    });
-
-    var node = []
-    node.push(user_id)
-
-    var group = Object.keys(friend)
-
-    for (var row_friend in friend) {
-        for (var row_infriend in friend[row_friend]) {
-            if (!node.includes(friend[row_friend][row_infriend])) {
-                node.push(friend[row_friend][row_infriend])
-                nodes.push({
-                    id: friend[row_friend][row_infriend],
-                    group: (group.indexOf(row_friend) + 1) / 1
-                })
-                links.push({
-                    source: user_id,
-                    target: friend[row_friend][row_infriend]
-                })
-            }
-        }
-    }
+    graph = data
 
     function zoomed() {
         container.attr("transform", "translate(" + d3.event.transform.x + "," + d3.event.transform.y + ") scale(" + d3.event.transform.k + ")");
@@ -57,7 +12,7 @@ d3.json(path_url).then(function (data) {
         .scaleExtent([0, 50])
         .on("zoom", zoomed);
 
-    var width = $('.wrapper').width() - 1,
+    var width = $('.egograph').width(),
         height = $('.wrapper').height();
 
     var svg = d3.select("body").selectAll("svg")
@@ -75,11 +30,6 @@ d3.json(path_url).then(function (data) {
 
     var container = svg.append("g")
         .attr("class", "main_plate")
-
-    graph = {
-        "nodes" : nodes,
-        "links" : links
-    }
 
     var link = container.selectAll("line").data(graph.links)
         .enter().append("line")
