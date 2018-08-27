@@ -1,72 +1,101 @@
 var express = require('express');
 var router = express.Router();
 var request = require("request")
-// var fs = require('fs');
+var path = require('path');
+var fs = require('fs');
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
   res.render('graph', { title: 'Ego Network' });
 });
 
-router.get('/data', function (req, res, next) {
-  request({
-    url: '../data/friendinterest_split_5.json',
-    json: true
-  }, function (error, response, body) {
-    res.send(body);
-    // var process_data = {}
-    // var category = [];
-    // for (var row_data in data) {
-    //   if (data[row_data]['_id'] === user_id) {
-    //     category = data[row_data]['category'];
-    //   }
-    // }
+router.get('/data/:file/:username', function (req, res, next) {
+  var dir_path = path.join(path.dirname(__dirname), 'public'),
+      file_path = path.join(dir_path, 'data/' + req.params.file + '.json'),
+      obj = [];
 
-    // var friend = {};
-    // for (var row_category in category) {
-    //   friend[category[row_category]] = []
-    //   for (var row_data in data) {
-    //     if (data[row_data]['_id'] !== user_id && data[row_data]['category'].includes(category[row_category])) {
-    //       friend[category[row_category]].push(data[row_data]['_id']);
-    //     }
-    //   }
-    // }
+  try {
+    obj = JSON.parse(fs.readFileSync(file_path, 'utf8'));
+  } catch(e) {
+    res.status(404).json({ code: 404, error: 'Not found' });
+  }
 
-    // var nodes = [],
-    //   links = [];
+  var user_find = {
+        nodes: [],
+        links: []
+      },
+      user_name = req.params.username;
 
-    // nodes.push({
-    //   id: user_id,
-    //   group: 0
-    // });
+  for (var row_data in obj) {
+    if (obj[row_data]['name'] === user_name) {
+      var friends = Object.keys(obj[row_data]['friend']);
+      user_find['name'] = obj[row_data]['name'];
+      user_find['category'] = Object.keys(obj[row_data]['category']);
+      user_find['friends'] = friends;
+      user_find['nodes'].push({
+        id : 1,
+        name : obj[row_data]['name'],
+        category: obj[row_data]['category'],
+        group: "Main"
+      })
+      for (var friend in friends) {
+        var color_lines = obj[row_data]['friend'][friends[friend]],
+          color_links = Object.keys(color_lines), max_val = [0, ""];
 
-    // var node = []
-    // node.push(user_id)
+        for (var color_link in color_links) {
+          if (max_val[0] < color_lines[color_links[color_link]]) {
+            max_val[0] = color_lines[color_links[color_link]]
+            max_val[1] = color_links[color_link]
+          }
+        }
 
-    // var group = Object.keys(friend)
+        user_find['nodes'].push({
+          id: parseInt(friend)+2,
+          name: friends[friend],
+          category: obj[row_data]['friend'][friends[friend]],
+          group: max_val[1]
+        })
 
-    // for (var row_friend in friend) {
-    //   for (var row_infriend in friend[row_friend]) {
-    //     if (!node.includes(friend[row_friend][row_infriend])) {
-    //       node.push(friend[row_friend][row_infriend])
-    //       nodes.push({
-    //         id: friend[row_friend][row_infriend],
-    //         group: (group.indexOf(row_friend) + 1) / 1
-    //       })
-    //       links.push({
-    //         source: user_id,
-    //         target: friend[row_friend][row_infriend]
-    //       })
-    //     }
-    //   }
-    // }
-    // res.send(process_data);
-  });
+        user_find['links'].push({
+          source: obj[row_data]['name'],
+          target: friends[friend],
+          group: max_val[1]
+        })
+      }
+      break;
+    }
+  }
 
-});
+  for (var friend in user_find['friends']) {
+    for (var row_data in obj) {
+      if (obj[row_data]['name'] === user_find['friends'][friend]) {
+        var friend_sub_1 = Object.keys(obj[row_data]['friend']);
 
-router.get('/graph', function (req, res, next) {
-  res.render('graph', { title: 'Ego Network' });
+        for (var friend_sub_2 in user_find['friends']) {
+          if (friend_sub_1.includes(user_find['friends'][friend_sub_2])) {
+            var color_lines = obj[row_data]['friend'][user_find['friends'][friend_sub_2]],
+                color_links = Object.keys(color_lines), max_val = [0, ""];
+
+            for (var color_link in color_links) {
+              if (max_val[0] < color_lines[color_links[color_link]]) {
+                max_val[0] = color_lines[color_links[color_link]]
+                max_val[1] = color_links[color_link]
+              }
+            }
+
+            user_find['links'].push({
+              source: obj[row_data]['name'],
+              target: user_find['friends'][friend_sub_2],
+              group: max_val[1]
+            })
+          }
+        }
+        break;
+      }
+    }
+  }
+
+  res.send(user_find)
 });
 
 module.exports = router;
