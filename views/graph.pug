@@ -14,10 +14,11 @@ block content
                 .wrapper(style={'height': 'calc(100vh - 56px)'})
                     .egograph
                         svg#egonetwork
-            .card(style="width: 30em; margin-bottom: 1em; margin-left: 1em; position: fixed; bottom: 0px; left: 0px;")
+            .card(style="margin-bottom: 1em; margin-left: 1em; position: fixed; bottom: 0px; left: 0px;")
                 .card-body#group_show
-            //- .form-group(style="width: 20em; margin-bottom: 1em; margin-right: 1em; position: fixed; bottom: 0px; right: 0px;")
-            //-     input(type="range" class="custom-range" min="0" max="5" step="1" id="layer_weight")
+            .form-group(style="width: 20em; margin-bottom: 1em; margin-right: 1em; position: fixed; bottom: 0px; right: 0px; display:flex;")
+                input(type="range" class="custom-range" min="0" max="5" step="1" id="layer_weight" style="margin-right: 1em;")
+                button(class="btn btn-primary my-2 my-sm-0" type="submit")#clear_input Clear
 
     script(src='/javascripts/bootstrap.min.js')
     script(src='/javascripts/popper.min.js')
