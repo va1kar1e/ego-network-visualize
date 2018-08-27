@@ -1,16 +1,35 @@
 $(document).ready(function () {
-    var path = {
-        "user_id": "t_athicha",
-        "json_path": "friendinterest_split_0/",
-    }
-    // $("button#userrun").click(function () {
-    //     egograph(path);
-    // });
-    egograph(path);
+    $("button#userrun").click(function (event) {
+        var name = $('input#userinput').val()
+        gengraph(name);
+        event.preventDefault();
+    });
 });
 
+function gengraph(name) {
+
+    $('input#userinput').val(name);
+
+
+    var path = {
+        "user_id": name,
+        "json_path": "friendinterest_split_0/",
+    }
+
+    d3.selectAll("#egonetwork").remove();
+
+    egograph(path);
+
+    var body = d3.select("body")
+        body.selectAll("#info_card").classed("d-none", true);
+        body.selectAll("#group_card").classed("d-none", false);
+        body.selectAll("#group_form").classed("d-none", false);
+        body.selectAll("#scale_form").classed("d-none", false);
+
+}
+
 function egograph(path) {
-    url_path = "data/" + path.json_path + path.user_id;
+    url_path = "egonetwork/data/" + path.json_path + path.user_id;
     d3.json(url_path).then(function (data) {
 
         graph = data
@@ -38,7 +57,9 @@ function egograph(path) {
         var width = $('.egograph').width(),
             height = $('.wrapper').height();
 
-        var svg = d3.select("body").selectAll("svg")
+        var svg = d3.select("body").selectAll(".egograph")
+            .append("svg")
+            .attr("id", "egonetwork")
             .attr("width", width)
             .attr("height", height)
             .attr("preserveAspectRatio", "xMaxYMin meet")
@@ -75,6 +96,7 @@ function egograph(path) {
             .on("click", function (d) {
                 mouseout_node();
                 mouseover_node(d);
+                d3.select("#info_show").html(getInfo(d));
             });
 
         var label = container.selectAll("text").data(graph.nodes)
@@ -167,6 +189,21 @@ function egograph(path) {
                 info += '<a href="#" onclick="groupover_node(\'' + value + '\');">' + (index + 1) + '.' + value + '</a> '
             });
             info += '';
+            return info;
+        }
+
+        function getInfo(n) {
+
+            d3.select("body").selectAll("#info_card").classed("d-none", false);
+
+            var info = "<p style=\"text-align:center; font-size: 1.5em;\">" + '<a href="#" onclick="gengraph(\'' + n.name + '\');">' + n.name + "</a></p>";
+            info += '<hr><p style="font-weight: bold;"> Category </p>';
+
+            var i = 1;
+            for (var cat in n.category) {
+                info += '<p>' + i + '.' + cat + " : " + n.category[cat] + '</p>';
+                i += 1;
+            }
             return info;
         }
     });

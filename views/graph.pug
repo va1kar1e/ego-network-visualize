@@ -9,15 +9,18 @@ block content
             input(class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search")#userinput
             button(class="btn btn-outline-light my-2 my-sm-0" type="submit")#userrun Search
     .container-fluid
-        .row
+        .row#barcontainer
             .col-md-12(style="background-color: #f0eeee; padding: 0px;")
                 .wrapper(style={'height': 'calc(100vh - 56px)'})
                     .egograph
                         svg#egonetwork
-            .card(style="margin-bottom: 1em; margin-left: 1em; position: fixed; bottom: 0px; left: 0px;")
+            .card(class="d-none")#info_card
+                .card-body#info_show
+            .card(class="d-none")#group_card
                 .card-body#group_show
-            .form-group(style="width: 20em; margin-bottom: 1em; margin-right: 1em; position: fixed; bottom: 0px; right: 0px; display:flex;")
-                input(type="range" class="custom-range" min="0" max="5" step="1" id="layer_weight" style="margin-right: 1em;")
+            .form-group(class="d-none")#scale_form
+                //- input(type="range" class="custom-range" min="0" max="5" step="1" id="layer_weight" style="margin-right: 1em;")
+            .form-group(class="d-none")#group_form
                 button(class="btn btn-primary my-2 my-sm-0" type="submit")#clear_input Clear
 
     script(src='/javascripts/bootstrap.min.js')
