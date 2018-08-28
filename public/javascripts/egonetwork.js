@@ -10,7 +10,6 @@ function gengraph(name) {
 
     $('input#userinput').val(name);
 
-
     var path = {
         "user_id": name,
         "json_path": "friendinterest_split_0/",
@@ -35,15 +34,15 @@ function egograph(path) {
         graph = data
 
         function color_node(d) {
-            var index_cat = graph.category.indexOf(d.group)
-            color_plate = d3.schemeSet3
-            return color_plate[graph.category.length - index_cat];
+            var index_cat = graph.category.indexOf(d.group) / graph.category.length;
+            color_plate = d3.interpolateRainbow(index_cat);
+            return color_plate;
         }
 
         function color_link(d) {
-            var index_cat = graph.category.indexOf(d.group)
-            color_plate = d3.schemeSet3
-            return color_plate[index_cat];
+            var index_cat = graph.category.indexOf(d.group) / graph.category.length;
+            color_plate = d3.interpolateRainbow(index_cat);
+            return color_plate;
         }
 
         function zoomed() {
@@ -68,9 +67,10 @@ function egograph(path) {
             .on("wheel", function () { d3.event.preventDefault(); });
 
         var simulation = d3.forceSimulation()
-            .force("link", d3.forceLink().distance(10).strength(0.5))
+            .force("link", d3.forceLink().distance(10).strength(1))
             .force("charge", d3.forceManyBody())
-            .force("center", d3.forceCenter(width / 2, height / 2));
+            .force("center", d3.forceCenter(width / 2, height / 2))
+            .force("collide", d3.forceCollide(15).strength(5));
 
         var container = svg.append("g")
             .attr("class", "main_plate")
@@ -186,9 +186,11 @@ function egograph(path) {
             d3.select("#group_show").style('display', 'grid');
             var info = '<p style="margin-bottom: 0.5em;">   Category </p>';
             n.forEach(function (value, index) {
-                info += '<a href="#" onclick="groupover_node(\'' + value + '\');">' + (index + 1) + '.' + value + '</a> '
+                info += ' <a href="#" onclick="groupover_node(\'' + value + '\');"><span>' + (index + 1) + '.' + value
+                info += ' </span><div style="display: inline-block; height: 10px; width: 10px; background-color: ' + d3.interpolateRainbow(index/n.length) + ';">'
+                info += '</div></a>'
+
             });
-            info += '';
             return info;
         }
 

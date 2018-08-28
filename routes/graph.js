@@ -43,12 +43,13 @@ router.get('/data/:file/:username', function (req, res, next) {
           color_links = Object.keys(color_lines), max_val = [0, ""];
 
         for (var color_link in color_links) {
-          if (max_val[0] < color_lines[color_links[color_link]]) {
-            max_val[0] = color_lines[color_links[color_link]]
-            max_val[1] = color_links[color_link]
+          var g_name = color_links[color_link],
+              g_dat = color_lines[g_name];
+          if (max_val[0] < g_dat && user_find['category'].includes(g_name)) {
+            max_val[0] = g_dat
+            max_val[1] = g_name
           }
         }
-
         user_find['nodes'].push({
           id: parseInt(friend)+2,
           name: friends[friend],
@@ -77,9 +78,11 @@ router.get('/data/:file/:username', function (req, res, next) {
                 color_links = Object.keys(color_lines), max_val = [0, ""];
 
             for (var color_link in color_links) {
-              if (max_val[0] < color_lines[color_links[color_link]]) {
-                max_val[0] = color_lines[color_links[color_link]]
-                max_val[1] = color_links[color_link]
+              var g_name = color_links[color_link],
+                  g_dat = color_lines[g_name];
+              if (max_val[0] < g_dat && user_find['category'].includes(g_name)) {
+                max_val[0] = g_dat
+                max_val[1] = g_name
               }
             }
 
