@@ -104,7 +104,7 @@ function egograph(path) {
             .attr("class", "node_label")
             .attr("font-size", 2)
             .style("fill-opacity", 0.2)
-            .style("fill", "#213451")
+            .style("fill", "#000000")
             .text(function (d) { return d.name; });
 
         simulation.force("link", d3.forceLink().id(function (d) { return d.name; }))
@@ -161,8 +161,9 @@ function egograph(path) {
                 .style("fill-opacity", 0.2);
 
             label.filter(function (d) { return neighbors[d.index] })
-                .attr("font-size", 3)
-                .style("fill-opacity", 1);
+                .attr("font-size", 4)
+                .style("fill-opacity", 1)
+                .style("text-shadow", " #FC0 1px 0 10px");
 
         };
 
@@ -175,6 +176,7 @@ function egograph(path) {
 
             label.attr("font-size", 2)
                 .style("fill-opacity", 0.2)
+                .style("text-shadow", "");
         };
 
         d3.select("#group_show").html(getDetail(graph.category));
@@ -224,6 +226,7 @@ function groupover_node(z) {
 
     labels.attr("font-size", 2)
         .style("fill-opacity", 0.2)
+        .style("text-shadow", "");
 
     var neighbors = {};
 
@@ -256,6 +259,7 @@ function groupover_node(z) {
             return neighbors[d.id]
         }
     })
-        .attr("font-size", 3)
-        .style("fill-opacity", 1);
+        .attr("font-size", 4)
+        .style("fill-opacity", 1)
+        .style("text-shadow", " #FC0 1px 0 10px");
 }
