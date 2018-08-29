@@ -70,7 +70,7 @@ function egograph(path) {
             .force("link", d3.forceLink().distance(10).strength(1))
             .force("charge", d3.forceManyBody())
             .force("center", d3.forceCenter(width / 2, height / 2))
-            .force("collide", d3.forceCollide(15).strength(5));
+            .force("collide", d3.forceCollide(20).strength(5));
 
         var container = svg.append("g")
             .attr("class", "main_plate")
@@ -88,8 +88,8 @@ function egograph(path) {
             .attr("group", function (d) { return d.group; })
             .attr("name", function (d) { return d.name; })
             .attr("r", function (d) {
-                if (d.group === "Main") return "10";
-                else return "6";
+                if (d.name === graph.name) return "15";
+                else return "8";
             })
             .style("opacity", 1).style("stroke-width", 0).style("stroke", "red")
             .attr("fill", function (d) { return color_node(d); })
@@ -161,7 +161,7 @@ function egograph(path) {
                 .style("fill-opacity", 0.2);
 
             label.filter(function (d) { return neighbors[d.index] })
-                .attr("font-size", 4)
+                .attr("font-size", 5)
                 .style("fill-opacity", 1)
                 .style("text-shadow", " #FC0 1px 0 10px");
 
@@ -259,7 +259,7 @@ function groupover_node(z) {
             return neighbors[d.id]
         }
     })
-        .attr("font-size", 4)
+        .attr("font-size", 5)
         .style("fill-opacity", 1)
         .style("text-shadow", " #FC0 1px 0 10px");
 }

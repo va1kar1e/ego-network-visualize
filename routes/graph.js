@@ -32,11 +32,20 @@ router.get('/data/:file/:username', function (req, res, next) {
       user_find['name'] = obj[row_data]['name'];
       user_find['category'] = Object.keys(obj[row_data]['category']);
       user_find['friends'] = friends;
+
+      var max_u_find = [0,""];
+      Object.keys(obj[row_data]['category']).forEach( function(value) {
+        if (max_u_find[0] < obj[row_data]['category'][value]) {
+          max_u_find[0] = obj[row_data]['category'][value];
+          max_u_find[1] = value;
+        }
+      });
+
       user_find['nodes'].push({
         id : 1,
         name : obj[row_data]['name'],
         category: obj[row_data]['category'],
-        group: "Main"
+        group: max_u_find[1]
       })
       for (var friend in friends) {
         var color_lines = obj[row_data]['friend'][friends[friend]],
@@ -67,36 +76,36 @@ router.get('/data/:file/:username', function (req, res, next) {
     }
   }
 
-  for (var friend in user_find['friends']) {
-    for (var row_data in obj) {
-      if (obj[row_data]['name'] === user_find['friends'][friend]) {
-        var friend_sub_1 = Object.keys(obj[row_data]['friend']);
+  // for (var friend in user_find['friends']) {
+  //   for (var row_data in obj) {
+  //     if (obj[row_data]['name'] === user_find['friends'][friend]) {
+  //       var friend_sub_1 = Object.keys(obj[row_data]['friend']);
 
-        for (var friend_sub_2 in user_find['friends']) {
-          if (friend_sub_1.includes(user_find['friends'][friend_sub_2])) {
-            var color_lines = obj[row_data]['friend'][user_find['friends'][friend_sub_2]],
-                color_links = Object.keys(color_lines), max_val = [0, ""];
+  //       for (var friend_sub_2 in user_find['friends']) {
+  //         if (friend_sub_1.includes(user_find['friends'][friend_sub_2])) {
+  //           var color_lines = obj[row_data]['friend'][user_find['friends'][friend_sub_2]],
+  //               color_links = Object.keys(color_lines), max_val = [0, ""];
 
-            for (var color_link in color_links) {
-              var g_name = color_links[color_link],
-                  g_dat = color_lines[g_name];
-              if (max_val[0] < g_dat && user_find['category'].includes(g_name)) {
-                max_val[0] = g_dat
-                max_val[1] = g_name
-              }
-            }
+  //           for (var color_link in color_links) {
+  //             var g_name = color_links[color_link],
+  //                 g_dat = color_lines[g_name];
+  //             if (max_val[0] < g_dat && user_find['category'].includes(g_name)) {
+  //               max_val[0] = g_dat
+  //               max_val[1] = g_name
+  //             }
+  //           }
 
-            user_find['links'].push({
-              source: obj[row_data]['name'],
-              target: user_find['friends'][friend_sub_2],
-              group: max_val[1]
-            })
-          }
-        }
-        break;
-      }
-    }
-  }
+  //           user_find['links'].push({
+  //             source: obj[row_data]['name'],
+  //             target: user_find['friends'][friend_sub_2],
+  //             group: max_val[1]
+  //           })
+  //         }
+  //       }
+  //       break;
+  //     }
+  //   }
+  // }
 
   res.send(user_find)
 });
