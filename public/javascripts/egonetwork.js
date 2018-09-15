@@ -8,11 +8,11 @@ $(document).ready(function () {
 
 function gengraph(name) {
 
-    $('input#userinput').val(name);
+    var filepath = $('input#fileinput').val();
 
     var path = {
-        "user_id": name,
-        "json_path": "friendinterest_split_0/",
+        "user_id": $.trim(name),
+        "json_path": $.trim(filepath),
     }
 
     d3.selectAll("#egonetwork").remove();
@@ -28,21 +28,20 @@ function gengraph(name) {
 }
 
 function egograph(path) {
-    url_path = "egonetwork/data/" + path.json_path + path.user_id;
+    url_path = "egonetwork/data/" + path.json_path + "/" + path.user_id;
     d3.json(url_path).then(function (data) {
 
         graph = data
 
+        category_g = Object.keys(graph.category)
         function color_node(d) {
-            var index_cat = graph.category.indexOf(d.group) / graph.category.length;
+            var index_cat = category_g.indexOf(d.group) / category_g.length;
             color_plate = d3.interpolateRainbow(index_cat);
             return color_plate;
         }
 
         function color_link(d) {
-            var index_cat = graph.category.indexOf(d.group) / graph.category.length;
-            color_plate = d3.interpolateRainbow(index_cat);
-            return color_plate;
+            return color_node(d);
         }
 
         function zoomed() {
@@ -187,11 +186,12 @@ function egograph(path) {
         function getDetail(n) {
             d3.select("#group_show").style('display', 'grid');
             var info = '<p style="margin-bottom: 0.5em;">   Category </p>';
-            n.forEach(function (value, index) {
-                info += ' <a href="#" onclick="groupover_node(\'' + value + '\');"><span>' + (index + 1) + '.' + value
-                info += ' </span><div style="display: inline-block; height: 10px; width: 10px; background-color: ' + d3.interpolateRainbow(index/n.length) + ';">'
-                info += '</div></a>'
-
+            Object.keys(n).forEach(function (value, index) {
+                info += '<a href="#" onclick="groupover_node(\'' + value + '\');">'
+                info += '<div style="display: inline-block; height: 0.8em; width: 0.8em; background-color: ' + d3.interpolateRainbow(index / Object.keys(n).length) + ';"></div>'
+                info += '<span>  ' + value + '</span>'
+                info += '<span> : ' + n[value] + ' users </span>'
+                info += '</a>'
             });
             return info;
         }
