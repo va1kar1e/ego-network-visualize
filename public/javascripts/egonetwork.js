@@ -1,6 +1,6 @@
 $(document).ready(function () {
     $("button#userrun").click(function (event) {
-        var name = $('input#userinput').val()
+        var name = $('input#userinput').val().toLowerCase()
         gengraph(name);
         event.preventDefault();
     });
@@ -8,7 +8,7 @@ $(document).ready(function () {
 
 function gengraph(name) {
 
-    var filepath = $('input#fileinput').val();
+    var filepath = $('input#fileinput').val().toLowerCase();
 
     var path = {
         "user_id": $.trim(name),
