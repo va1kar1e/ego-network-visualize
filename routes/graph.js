@@ -92,4 +92,26 @@ router.get('/data/:file/:username', function (req, res, next) {
   res.send(user_find)
 });
 
+router.get('/username/:file', function (req, res, next) {
+  var dir_path = path.join(path.dirname(__dirname), 'public'),
+    file_path = path.join(dir_path, 'data/' + req.params.file + '.json'),
+    obj = [];
+
+  try {
+    obj = JSON.parse(fs.readFileSync(file_path, 'utf8'));
+  } catch (e) {
+    res.status(404).json({
+      code: 404,
+      error: 'Not found'
+    });
+  }
+
+  name = [] 
+  for (var row_data in obj) {
+    name.push(obj[row_data]['name'])
+  }
+
+  res.send(name)
+});
+
 module.exports = router;
