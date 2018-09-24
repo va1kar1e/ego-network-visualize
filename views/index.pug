@@ -3,9 +3,19 @@ extends layout
 block content
     nav(class="navbar navbar-dark bg-primary")
         a.navbar-brand(href="#")
-            img(src="images/MIKE.png" style="width:75px; height:30px" class="d-inline-block align-top" alt="")
-            span(style="margin-left: 20px;") Ego network of twitter data
-    .container(style="background-color: salmon;" )
-        a.index_head(href="/egonetwork") Ego network
+            img(src="/images/MIKE.png" style="width:75px; height:30px" class="d-inline-block align-top" alt="")
+            //- span(style="margin-left: 20px;") Ego network of twitter data
+
+    .container-fluid
+        .jumbotron
+            h1.display-4 Ego Network visualization
+            p.lead
+                | based on twitter data.
+            hr.my-4
+            p
+                | It uses utility classes for typography and spacing to space content out within the larger container.
+            p.lead
+                a.btn.btn-primary.btn-lg(href='/egonetwork', role='button') Let's go
+
     script(src='/javascripts/bootstrap.min.js')
     script(src='/javascripts/popper.min.js')

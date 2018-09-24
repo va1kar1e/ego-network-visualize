@@ -71,3 +71,7 @@ a {
   background: #8699f0;
   color: rgb(133, 154, 250);
 }
+
+.jumbotron {
+  margin-top: 1em;
+}

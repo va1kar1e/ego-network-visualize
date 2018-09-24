@@ -3,11 +3,11 @@ extends layout
 block content
     nav(class="navbar navbar-dark bg-primary")
         a.navbar-brand(href="#")
-            img(src="../images/MIKE.png" style="width:75px; height:30px" class="d-inline-block align-top" alt="")
+            img(src="/images/MIKE.png" style="width:75px; height:30px" class="d-inline-block align-top" alt="")
             span(style="margin-left: 20px;") Ego network of twitter data
         form.form-inline
-            input(class="form-control mr-sm-2" type="search" placeholder="Filename" aria-label="Search")#fileinput
-            input(class="form-control mr-sm-2" type="search" placeholder="Username" aria-label="Search")#userinput
+            input(class="form-control mr-sm-2" type="search" placeholder="Filename" aria-label="Search" data-toggle="tooltip" data-placement="bottom" title="friendinterest_split_5")#fileinput
+            input(class="form-control mr-sm-2" type="search" placeholder="Username" aria-label="Search" data-toggle="tooltip" data-placement="bottom" title="juthamas_rat")#userinput
             button(class="btn btn-outline-light my-2 my-sm-0" type="submit")#userrun Search
     .container-fluid
         .row#barcontainer
