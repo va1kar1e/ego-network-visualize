@@ -10,10 +10,52 @@ block content
         .jumbotron
             h1.display-4 Ego Network visualization
             p.lead
-                | based on twitter data.
+                | This is the ego network graph that shows a relation of users in Twitter data.
             hr.my-4
+            p.lead
+                | Instruction
             p
-                | It uses utility classes for typography and spacing to space content out within the larger container.
+                | 1. Copy a Json data to 
+                Mark.text-primary
+                    | '/public/data'
+                |  in the project folder.
+            P
+                Mark.text-primary
+                    | 2. yarn start / npm start
+            P   
+                | 3. Read Instruction and press 
+                Mark.text-primary
+                    | Let's go
+                |  button
+            P   
+                | 4. Input filename of your interested Json data 
+                Mark.text-primary
+                    | (ex. 'friendinterest_nosplit_5', 'friendinterest_split_5')
+            P
+                | 5. Input your interested username 
+                Mark.text-primary
+                    | (ex. 'juthamas_rat', 'Baycoding')
+            P
+                | 6. press 
+                Mark.text-primary
+                    | Search
+                |  button for generate graph
+            P
+                | 7. press 
+                Mark.text-primary
+                    | Clear
+                |  button for clear graph
+            P
+                | 8. press 
+                Mark.text-primary
+                    | Node circle
+                |  button for more node detail
+            P
+                | 9. press 
+                Mark.text-primary
+                    | List of Category
+                |  button for highlight users in this category
+            br
             p.lead
                 a.btn.btn-primary.btn-lg(href='/egonetwork', role='button') Let's go
 
