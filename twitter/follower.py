@@ -1,13 +1,13 @@
 import tweepy
 import time
-auth1 = tweepy.OAuthHandler("ZVizkwFa0Td749ICUXZbBXKHv", "f5VHuLNkayKu2lr4A3Ns70louDxJbY0NN5EHvIyOIneGCx12AC")
-auth1.set_access_token("277027896-wQjWzOzVqcvw6yEWHytQu6F8QyYKlnvyUE6lcMBa", "8QHF8dBJqA9r7T2zATDSyGi6GQbiWucgc79NvB5g4xDKV")
+auth1 = tweepy.OAuthHandler("", "")
+auth1.set_access_token("", "")
 
-auth2 = tweepy.OAuthHandler("eXFPS2QS25wS5KKiAvKSNxshm", "zzYM6lDWdj35OYxp4uACviIyjXpfI2QUZGIFAkt5DzBWLf5QU5")
-auth2.set_access_token("277027896-8UXLOZsM4kLSzniTVyXXVBUSFeqhheRQLpAVy9PJ", "KUBEIuJdRYaCgKLjoA7Z9Kd3cfWUtx7s364UBc4N6UWTs")
+auth2 = tweepy.OAuthHandler("", "")
+auth2.set_access_token("", "")
 
-auth3 = tweepy.OAuthHandler("J4acS1fdXeT1hSTI4fWqpPJ0U", "yhun5VMsDYnIbGKJjw4qOijEKKlLF5nJMT1d4McxUUXxJZOS11")
-auth3.set_access_token("934818122824945664-XTNvbZ3J3bTrLHCRiq6ijKsUBCWp0DM", "RhZpcFav9EfRT0Y0pgSE5vFXgeV1wG5YH8lntGSkJUtf6")
+auth3 = tweepy.OAuthHandler("", "")
+auth3.set_access_token("", "")
 
 #auth1 12:37
 #auth2
